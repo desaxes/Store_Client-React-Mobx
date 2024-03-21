@@ -17,10 +17,19 @@ align-self:center;
 export const StyledBox = styled.div`
 width:${props => props.width};
 display:${props => props.display};
+flex-direction:${props => props.dir};
 align-items:${props => props.align};
 justify-content:${props => props.jstf};
 gap:${props => props.gap};
 margin:${props => props.margin};
 padding:${props => props.padding};
+box-shadow:${props => props.shadow};
+border-radius:${props => props.br};
+cursor:${props => props.cursor};
+grid-template-columns:repeat(2,50%);
+transition: 0.2s;
+&:hover{
+    box-shadow:${props => props.hover}; 
+}
 `
 
