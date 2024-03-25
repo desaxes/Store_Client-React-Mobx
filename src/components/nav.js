@@ -6,9 +6,10 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from './link';
-import { LOGIN_ROUTE, SHOP_ROUTE } from '../utils/constants';
+import { ADMIN_ROUTE, LOGIN_ROUTE, SHOP_ROUTE } from '../utils/constants';
 import { StyledBox } from '../styledComponents/styled-components';
 import { observer } from 'mobx-react-lite'
+import { useNavigate } from 'react-router-dom';
 export const NavBar = observer(() => {
     const { user } = useContext(AppContext)
     return (
@@ -42,7 +43,7 @@ export const NavBar = observer(() => {
                                 jstf='center'
                                 display='flex'
                                 gap='30px'>
-                                <Link border='2px green solid' fz='18px'>Admin</Link>
+                                <Link to={ADMIN_ROUTE} border='2px green solid' fz='18px'>Admin</Link>
                                 <Link border='2px green solid' fz='18px'>Exit</Link>
                             </StyledBox>
                             :

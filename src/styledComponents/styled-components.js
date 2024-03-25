@@ -12,6 +12,7 @@ padding:4px 12px;
 align-self:center;
 &:hover{
     color:${props => props.hover ? props.hover : 'green'}; 
+    background-color:white;
 }
 `
 export const StyledBox = styled.div`
