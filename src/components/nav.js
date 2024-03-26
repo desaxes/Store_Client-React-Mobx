@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '..'
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -12,6 +12,9 @@ import { observer } from 'mobx-react-lite'
 import { useNavigate } from 'react-router-dom';
 export const NavBar = observer(() => {
     const { user } = useContext(AppContext)
+    const exit = () => {
+        localStorage.setItem('token', '')
+    }
     return (
         <Navbar bg="dark" data-bs-theme="dark" expand="lg" className="bg-body-tertiary">
             <Container fluid>
@@ -44,7 +47,7 @@ export const NavBar = observer(() => {
                                 display='flex'
                                 gap='30px'>
                                 <Link to={ADMIN_ROUTE} border='2px green solid' fz='18px'>Admin</Link>
-                                <Link border='2px green solid' fz='18px'>Exit</Link>
+                                <Button onClick={() => exit()} variant='outline-danger'>Exit</Button>
                             </StyledBox>
                             :
                             <StyledBox jstf='center' display='flex'>
