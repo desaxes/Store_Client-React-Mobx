@@ -6,25 +6,38 @@ import { Link, StyledLink } from './styledComponents/styled-components';
 import { SHOP_ROUTE } from './utils/constants';
 import { AppContext } from '.';
 import { check } from './http/userAPI';
+import { jwtDecode } from 'jwt-decode';
+import { observer } from 'mobx-react-lite';
+import { getBrands, getDevices, getTypes } from './http/deviceAPI';
 
-function App() {
+const App = observer(() => {
   const { user } = useContext(AppContext)
-  const [appInit, setAppInit] = useState(false)
+  const { app } = useContext(AppContext)
+  const { device } = useContext(AppContext)
   const checkAuth = async () => {
     try {
-      await check()
+      const { token } = await check()
+      localStorage.setItem('token', token)
       user.setIsAuth(true)
-      setAppInit(true)
+      user.setUser(jwtDecode(token))
+      app.setInit(true)
     } catch (e) {
-      setAppInit(true)
+      app.setInit(true)
     }
   }
+  // useEffect(() => {
+  //     getTypes().then(res=>device.setTypes(res.data))
+  // }, [device])
+  // useEffect(() => {
+  //     getBrands().then(res=>device.setBrands(res.data))
+  // }, [device])
+  // useEffect(() => {
+  //     getDevices().then(res=>device.setDevices(res.data))
+  // }, [device])
   useEffect(() => {
-  }, [appInit])
-  checkAuth()
-  console.log(localStorage)
-  console.log(user.isAuth)
-  if (appInit) {
+    checkAuth()
+  }, [])
+  if (app.init) {
     return (
       <div>
         <NavBar />
@@ -32,6 +45,6 @@ function App() {
       </div>
     )
   };
-}
+})
 
 export default App;

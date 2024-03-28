@@ -1,0 +1,30 @@
+import { $authHost, $host } from ".";
+
+export const createType = async (name) => {
+    const res = await $authHost.post('api/type', { name })
+    return res
+}
+export const getTypes = async () => {
+    const res = await $host.get('api/type')
+    return res
+}
+export const createBrand = async (name) => {
+    const res = await $authHost.post('api/brand', { name })
+    return res
+}
+export const getBrands = async () => {
+    const res = await $host.get('api/brand')
+    return res
+}
+export const createDevice = async (formData) => {
+    const res = await $authHost.post('api/device', formData)
+    return res
+}
+export const getDevices = async (page) => {
+    const res = await $host.get('api/device?page='+page)
+    return res
+}
+export const getDeviceById = async (id) => {
+    const res = await $host.get('api/device/' + id)
+    return res
+}

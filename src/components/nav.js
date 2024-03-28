@@ -10,10 +10,13 @@ import { ADMIN_ROUTE, LOGIN_ROUTE, SHOP_ROUTE } from '../utils/constants';
 import { StyledBox } from '../styledComponents/styled-components';
 import { observer } from 'mobx-react-lite'
 import { useNavigate } from 'react-router-dom';
+import { Row } from 'react-bootstrap';
 export const NavBar = observer(() => {
     const { user } = useContext(AppContext)
     const exit = () => {
         localStorage.setItem('token', '')
+        user.setIsAuth(false)
+        user.setUser({})
     }
     return (
         <Navbar bg="dark" data-bs-theme="dark" expand="lg" className="bg-body-tertiary">
@@ -46,7 +49,8 @@ export const NavBar = observer(() => {
                                 jstf='center'
                                 display='flex'
                                 gap='30px'>
-                                <Link to={ADMIN_ROUTE} border='2px green solid' fz='18px'>Admin</Link>
+                                {user.isAuth && <Row className='align-self-center' style={{color:'white', fontWeight:'bold', fontSize:'22px'}}>{user.user.email.split('@')[0]}</Row>}
+                                {user.user.role === 'ADMIN' && <Link to={ADMIN_ROUTE} border='2px green solid' fz='18px'>Admin</Link>}
                                 <Button onClick={() => exit()} variant='outline-danger'>Exit</Button>
                             </StyledBox>
                             :

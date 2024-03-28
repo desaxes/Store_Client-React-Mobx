@@ -29,6 +29,7 @@ border-radius:${props => props.br};
 cursor:${props => props.cursor};
 grid-template-columns:repeat(2,50%);
 transition: 0.2s;
+position:relative;
 &:hover{
     box-shadow:${props => props.hover}; 
 }

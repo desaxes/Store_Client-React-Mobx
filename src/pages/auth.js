@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Container from 'react-bootstrap/esm/Container'
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
@@ -7,16 +7,21 @@ import { Link } from '../components/link';
 import { LOGIN_ROUTE, REGISTRATION_ROUTE } from '../utils/constants';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { login, registration } from '../http/userAPI';
+import { AppContext } from '..';
+import {jwtDecode} from 'jwt-decode'
 export const Auth = () => {
     const location = useLocation()
     const isLogin = location.pathname === LOGIN_ROUTE
     const navigate = useNavigate()
+    const { user } = useContext(AppContext)
     const [error, setError] = useState('')
     const click = async () => {
         if (isLogin) {
             try {
                 const res = await login(email, password)
                 localStorage.setItem('token', res.data.token)
+                user.setIsAuth(true)
+                user.setUser(jwtDecode(res.data.token))
                 navigate('/shop')
             }
             catch (e) {
@@ -27,6 +32,8 @@ export const Auth = () => {
             try {
                 const res = await registration(email, password)
                 localStorage.setItem('token', res.data.token)
+                user.setIsAuth(true)
+                user.setUser(jwtDecode(res.data.token))
                 navigate('/shop')
             }
             catch (e) {
@@ -37,6 +44,7 @@ export const Auth = () => {
     console.log(localStorage)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    useEffect(()=>{setError(false)},[isLogin])
     return (
         <Container className='d-flex justify-content-center align-items-center'
             style={{ height: window.innerHeight - 100 }}>

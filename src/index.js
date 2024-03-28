@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import UserStore from './store/UserStore';
 import DeviceStore from './store/DeviceStore';
+import AppStore from './store/AppStore';
 
 export const AppContext = createContext(null)
 
@@ -15,7 +16,8 @@ root.render(
     <BrowserRouter>
       <AppContext.Provider value={{
         user: new UserStore(),
-        device: new DeviceStore()
+        device: new DeviceStore(),
+        app: new AppStore()
       }}>
         <App />
       </AppContext.Provider>
