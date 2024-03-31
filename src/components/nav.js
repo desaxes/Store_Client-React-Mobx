@@ -29,8 +29,7 @@ export const NavBar = observer(() => {
                         style={{ maxHeight: '100px' }}
                     >
                         <StyledBox jstf='space-around' display='flex' align='center' padding='20px' gap='30px'>
-                            <Link border='2px green solid' fz='18px' href="#action1">Home</Link>
-                            <Link border='2px green solid' fz='18px' href="#action2">Link</Link>
+                            <Link to='/shop' border='2px green solid' fz='18px' href="#action1">Home</Link>
                             <Link border='2px green solid' fz='18px' href="#action2">Basket</Link>
                         </StyledBox>
                     </Nav>

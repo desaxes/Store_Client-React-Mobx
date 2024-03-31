@@ -20,8 +20,8 @@ export const createDevice = async (formData) => {
     const res = await $authHost.post('api/device', formData)
     return res
 }
-export const getDevices = async (page) => {
-    const res = await $host.get('api/device?page='+page)
+export const getDevices = async (page, limit, brandId, typeId) => {
+    const res = await $host.get('api/device?page=' + page + '&limit=' + limit + '&brandId=' + brandId + '&typeId=' + typeId)
     return res
 }
 export const getDeviceById = async (id) => {

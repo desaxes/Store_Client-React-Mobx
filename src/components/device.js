@@ -9,7 +9,7 @@ export const Device = observer((props) => {
     const navigate = useNavigate()
     return (
         <Col md={4} className='mt-4'  >
-            <StyledBox cursor='pointer'
+            <StyledBox width='100%' cursor='pointer'
                 padding='30px' display='flex'
                 shadow='0 5px 10px green' br='8px'
                 jstf='space-between' hover='0 5px 15px blue'

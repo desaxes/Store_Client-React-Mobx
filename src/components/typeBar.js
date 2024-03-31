@@ -12,7 +12,7 @@ export const TypeBar = observer(() => {
                 {device.selectedType.name}
             </Dropdown.Toggle>
             <Dropdown.Menu >
-                <Dropdown.Item onClick={() => device.setSelectedType({name:'All Types'})} style={{ cursor: 'pointer', fontSize: 20 }}>All Types</Dropdown.Item>
+                <Dropdown.Item onClick={() => device.setSelectedType({ name: 'All Types', id: 999 })} style={{ cursor: 'pointer', fontSize: 20 }}>All Types</Dropdown.Item>
                 {device.types.map(e => <Dropdown.Item
                     style={{ cursor: 'pointer', fontSize: 20 }}
                     variant='success'
