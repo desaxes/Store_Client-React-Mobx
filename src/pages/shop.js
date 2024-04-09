@@ -32,12 +32,13 @@ export const Shop = observer(() => {
         setSearch({ page: page })
         let brandId = device.selectedBrand.map(e => e.id).join()
         let typeId = device.selectedType.id === 999 ? '' : device.selectedType.id
-        getDevices(page, limit, brandId, typeId).then(res => {
+        let name = device.searchBy
+        getDevices(page, limit, brandId, typeId, name).then(res => {
             device.setDevices(res.data.devices)
             setPageCount(Math.ceil(res.data.total / limit))
         })
         setSwitchMethod(false)
-    }, [page, device.selectedBrand.length, device.selectedType])
+    }, [page, device.selectedBrand.length, device.selectedType,device.searchBy])
     const changePage = (e) => {
         if (e === 'next') {
             if (+page < pageCount) {

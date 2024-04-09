@@ -7,12 +7,16 @@ import { AppContext } from '..';
 import { StyledBox } from '../styledComponents/styled-components';
 import Button from 'react-bootstrap/esm/Button';
 import { observer } from 'mobx-react-lite';
-import { getDeviceById } from '../http/deviceAPI';
+import { addDeviceToBasket, getDeviceById } from '../http/deviceAPI';
 export const DevicePage = observer(() => {
     const { id } = useParams()
+    const { user } = useContext(AppContext)
     const [device, setDevice] = useState({
         info: []
     })
+    const toBasket = () => {
+        addDeviceToBasket(user.user.id, device.id)
+    }
     useEffect(() => { getDeviceById(id).then(res => setDevice(res.data)) }, [])
     let specs = device.info.map(e => <p>{e.title}:{e.description}</p>)
     return (
@@ -31,7 +35,7 @@ export const DevicePage = observer(() => {
                     {specs}
                     <StyledBox display='flex' align='center' jstf='space-between'>
                         <h3 style={{ fontWeight: 'bold' }}>{device.price}$</h3>
-                        <Button variant='success'><h3>Add to basket</h3></Button>
+                        <Button onClick={() => toBasket()} variant='success'><h3>Add to basket</h3></Button>
                     </StyledBox>
                 </Col>
             </Row>

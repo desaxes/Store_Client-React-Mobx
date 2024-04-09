@@ -6,13 +6,14 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from './link';
-import { ADMIN_ROUTE, LOGIN_ROUTE, SHOP_ROUTE } from '../utils/constants';
+import { ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, SHOP_ROUTE } from '../utils/constants';
 import { StyledBox } from '../styledComponents/styled-components';
 import { observer } from 'mobx-react-lite'
 import { useNavigate } from 'react-router-dom';
 import { Row } from 'react-bootstrap';
 export const NavBar = observer(() => {
     const { user } = useContext(AppContext)
+    const { device } = useContext(AppContext)
     const exit = () => {
         localStorage.setItem('token', '')
         user.setIsAuth(false)
@@ -29,8 +30,8 @@ export const NavBar = observer(() => {
                         style={{ maxHeight: '100px' }}
                     >
                         <StyledBox jstf='space-around' display='flex' align='center' padding='20px' gap='30px'>
-                            <Link to='/shop' border='2px green solid' fz='18px' href="#action1">Home</Link>
-                            <Link border='2px green solid' fz='18px' href="#action2">Basket</Link>
+                            <Link to={SHOP_ROUTE} border='2px green solid' fz='18px' href="#action1">Home</Link>
+                            <Link to={BASKET_ROUTE} border='2px green solid' fz='18px' href="#action2">Basket</Link>
                         </StyledBox>
                     </Nav>
                     <Form className="d-flex">
@@ -39,8 +40,9 @@ export const NavBar = observer(() => {
                             placeholder="Search"
                             className="me-2"
                             aria-label="Search"
+                            value={device.searchBy}
+                            onChange={e => device.setSearchBy(e.target.value)}
                         />
-                        <Button variant="outline-success">Search</Button>
                     </Form>
                     <StyledBox padding='20px' margin='0 20px 0 auto'>
                         {user.isAuth ?
@@ -48,7 +50,7 @@ export const NavBar = observer(() => {
                                 jstf='center'
                                 display='flex'
                                 gap='30px'>
-                                {user.isAuth && <Row className='align-self-center' style={{color:'white', fontWeight:'bold', fontSize:'22px'}}>{user.user.email.split('@')[0]}</Row>}
+                                {user.isAuth && <Row className='align-self-center' style={{ color: 'white', fontWeight: 'bold', fontSize: '22px' }}>{user.user.email.split('@')[0]}</Row>}
                                 {user.user.role === 'ADMIN' && <Link to={ADMIN_ROUTE} border='2px green solid' fz='18px'>Admin</Link>}
                                 <Button onClick={() => exit()} variant='outline-danger'>Exit</Button>
                             </StyledBox>

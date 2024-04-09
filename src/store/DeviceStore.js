@@ -9,6 +9,7 @@ export default class DeviceStore {
         ]
         this._selectedType = { id: 999, name: 'All Types' }
         this._selectedBrand = []
+        this._searchBy = ''
         makeAutoObservable(this)
     }
 
@@ -33,6 +34,9 @@ export default class DeviceStore {
     setDevices(devices) {
         this._devices = devices
     }
+    setSearchBy(name) {
+        this._searchBy = name
+    }
     get types() {
         return this._types
     }
@@ -47,5 +51,8 @@ export default class DeviceStore {
     }
     get selectedBrand() {
         return this._selectedBrand
+    }
+    get searchBy() {
+        return this._searchBy
     }
 }
