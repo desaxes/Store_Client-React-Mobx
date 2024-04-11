@@ -7,17 +7,38 @@ import { AppContext } from '..';
 import { StyledBox } from '../styledComponents/styled-components';
 import Button from 'react-bootstrap/esm/Button';
 import { observer } from 'mobx-react-lite';
-import { addDeviceToBasket, getDeviceById } from '../http/deviceAPI';
+import { addDeviceToBasket, checkDevice, getBasketById, getDeviceById, removeDevice } from '../http/deviceAPI';
 export const DevicePage = observer(() => {
     const { id } = useParams()
     const { user } = useContext(AppContext)
     const [device, setDevice] = useState({
         info: []
     })
+    const [basketId, setBasketId] = useState()
+    const [basketDevice, setBasketDevice] = useState()
+    const [request, setRequest] = useState(false)
     const toBasket = () => {
-        addDeviceToBasket(user.user.id, device.id)
+        if (basketDevice != null) {
+            removeDevice(basketId, device.id)
+            setRequest(!request)
+        }
+        else {
+            addDeviceToBasket(basketId, device.id)
+            setRequest(!request)
+        }
     }
-    useEffect(() => { getDeviceById(id).then(res => setDevice(res.data)) }, [])
+    useEffect(() => {
+        getDeviceById(id).then(res => {
+            setDevice(res.data)
+            getBasketById(user.user.id).then(res => {
+                checkDevice(res.data, id).then(res => {
+                    setBasketDevice(res.data)
+                })
+                setBasketId(res.data)
+            })
+        }
+        )
+    }, [request])
     let specs = device.info.map(e => <p>{e.title}:{e.description}</p>)
     return (
         <Container className='mt-4'>
@@ -35,7 +56,7 @@ export const DevicePage = observer(() => {
                     {specs}
                     <StyledBox display='flex' align='center' jstf='space-between'>
                         <h3 style={{ fontWeight: 'bold' }}>{device.price}$</h3>
-                        <Button onClick={() => toBasket()} variant='success'><h3>Add to basket</h3></Button>
+                        <Button disabled={!user.isAuth} onClick={() => toBasket()} variant='success'><h3>{basketDevice != null ? 'Remove from Basket' : 'Add to basket'}</h3></Button>
                     </StyledBox>
                 </Col>
             </Row>
